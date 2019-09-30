@@ -19,7 +19,7 @@ public class UdpServer extends AbstractSimpleComsServer{
 				for(int i=0;i<data.length;i++) {
 					if(packet[i].byteValue() =='*') {
 						for( i=0;i<data.length;i++) {
-							// Copy in our name completly
+							// Copy in our name completely
 							packet[i]=data[i];
 						}
 						return true;
