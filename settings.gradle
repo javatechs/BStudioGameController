@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='BS Game Controller'
+rootProject.name='com.belithco.bsgamecontroller.MainActivity'
