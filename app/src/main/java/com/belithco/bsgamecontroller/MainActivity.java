@@ -7,21 +7,24 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import edu.wpi.SimplePacketComs.device.gameController.GameController;
 import edu.wpi.SimplePacketComs.phy.UDPSimplePacketComs;
 import edu.wpi.SimplePacketComs.server.device.GameControllerServer;
 
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Switch;
 
-import java.net.InetAddress;
 
 public class MainActivity extends AppCompatActivity {
-    GameControllerServer gcs;
+    GameControllerServer gcs = null;
     UDPSimplePacketComs coms;
+    String controllerName = "GameController_22";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +41,45 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        Button btn = findViewById(R.id.btn_connect);
-        btn.setOnClickListener(new Button.OnClickListener() {
+        View v;
+        Button btn;
+        EditText editText = findViewById(R.id.controller_name);
+        editText.setText(controllerName);
+
+        btn = findViewById(R.id.controller_x);
+        btn.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                Log.d("", "onClick: ");
-                gcs = new GameControllerServer("GameController_22",2);
-                gcs.connect();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+                    int[] x = gcs.getControllerData();
+                    x[1]=1;
+                    Log.d("TouchTest", "Touch down");
+                } else if (motionEvent.getAction() == android.view.MotionEvent.ACTION_UP) {
+                    Log.d("TouchTest", "Touch up");
+                    int[] x = gcs.getControllerData();
+                    x[1]=0;
+                }
+                return true;
+            }
+        });
+
+        Switch sw = (Switch) findViewById(R.id.switch_onoff);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    try {
+                        if (null == gcs) {
+                            gcs = new GameControllerServer(controllerName,2);
+                        }
+                        gcs.connect();
+                    } catch (Exception e) {
+
+                    }
+                } else {
+                    // The toggle is disabled
+                    gcs.disconnect();
+                }
             }
         });
     }
