@@ -7,7 +7,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import edu.wpi.SimplePacketComs.device.gameController.GameController;
 import edu.wpi.SimplePacketComs.phy.UDPSimplePacketComs;
 import edu.wpi.SimplePacketComs.server.device.GameControllerServer;
 
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
-import java.net.InetAddress;
 
 public class MainActivity extends AppCompatActivity {
     GameControllerServer gcs;
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("", "onClick: ");
                 gcs = new GameControllerServer("GameController_22",2);
                 gcs.connect();
+                findViewById(R.id.btn_connect).setEnabled(false);
             }
         });
     }
