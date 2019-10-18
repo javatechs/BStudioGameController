@@ -134,10 +134,14 @@ public class MainActivity extends AppCompatActivity {
         JoystickView joystick;
         joystick = (JoystickView) findViewById(R.id.leftJoystick);
         joystick.setOnMoveListener(
-                new JoystickListener(this, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXLeft, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYLeft));
+                new JoystickListener(this,
+                        GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXLeft, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYLeft,
+                        R.id.leftJoyAngle, R.id.leftJoyStrength));
         joystick = (JoystickView) findViewById(R.id.rightJoystick);
         joystick.setOnMoveListener(
-                new JoystickListener(this, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXRight, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYRight));
+                new JoystickListener(this,
+                        GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXRight, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYRight,
+                        R.id.rightJoyAngle, R.id.rightJoyStrength));
 
         // Connect
         Switch sw = (Switch) findViewById(R.id.switch_onoff);
@@ -306,21 +310,45 @@ public class MainActivity extends AppCompatActivity {
     class JoystickListener implements JoystickView.OnMoveListener {
         GAMECTRLR_COMM_OFFSET_CLASSIC offsetX;
         GAMECTRLR_COMM_OFFSET_CLASSIC offsetY;
+        int idJoyStrength;
+        int idJoyAngle;
         MainActivity host;
-        JoystickListener(MainActivity host, GAMECTRLR_COMM_OFFSET_CLASSIC offsetX, GAMECTRLR_COMM_OFFSET_CLASSIC offsetY) {
+
+        JoystickListener(MainActivity host,
+                         GAMECTRLR_COMM_OFFSET_CLASSIC offsetX, GAMECTRLR_COMM_OFFSET_CLASSIC offsetY,
+                         int idJoyAngle, int idJoyStrength) {
             super();
             this.offsetX = offsetX;
             this.offsetY = offsetY;
+            this.idJoyAngle = idJoyAngle;
+            this.idJoyStrength = idJoyStrength;
             this.host = host;
         }
         @Override
         public void onMove(int angle, int strength) {
+            TextView tv;
+            double radians = Math.toRadians(angle);
+            // Display raw joystick position
+            tv = findViewById(idJoyAngle);
+            tv.setText("" + angle);
+            tv = findViewById(idJoyStrength);
+            tv.setText("" + strength);
+
+            // Is there a valid GameControllerServer?
             if (null==host.gcs) {
                 return;
             }
-            int[] x = host.gcs.getControllerData();
-            x[offsetX.offset()] = (int)(Math.sin(angle)*10.0);
-//            x[offsetY.offset()] = (int)(Math.cos(angle)*0.0);
+            int[] array = host.gcs.getControllerData();
+            // Sine/cos of angle produces XY on perimeter of unit circle.
+            // Multiple by 128 to compute offset. 128D=80H.
+            // Reduce by strength as a ratio.
+            // Add 128 such that x=o,y=0 is expressed as 80H.
+            double strengthRatio = strength/100.0;
+            int y = (int)(((Math.sin(radians)*128.0)*strengthRatio)+128.0);
+            int x = (int)(((Math.cos(radians)*128.0)*strengthRatio)+128.0);
+
+            array[offsetX.offset()] = Math.min(255, x);
+            array[offsetY.offset()] = Math.min(255, y);
         }
     }
 

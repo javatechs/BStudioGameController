@@ -12,9 +12,9 @@
         android:id="@+id/switch_onoff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Off/On"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:text="@string/off_On"
+        android:layout_marginTop="@dimen/screen_edge_margin"
+        android:layout_marginLeft="@dimen/screen_edge_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -22,8 +22,8 @@
         android:id="@+id/controller_name_caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Controller Name"
-        android:layout_marginTop="10dp"
+        android:text="@string/controller_name"
+        android:layout_marginTop="@dimen/screen_edge_margin"
         app:layout_constraintBottom_toBottomOf="@id/switch_onoff"
         app:layout_constraintLeft_toRightOf="@id/switch_onoff"
         />
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="------"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/screen_edge_margin"
         app:layout_constraintBottom_toBottomOf="@id/controller_name_caption"
         app:layout_constraintLeft_toRightOf="@id/controller_name_caption"
         />
@@ -44,8 +44,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/controller_name"
         android:background="@color/cardview_shadow_end_color"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/screen_edge_margin"
+        android:layout_marginTop="@dimen/screen_edge_margin"
         >
         <Button
             android:id="@+id/btn_PadUp"
@@ -92,8 +92,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/controller_name"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginRight="@dimen/screen_edge_margin"
+        android:layout_marginTop="@dimen/screen_edge_margin"
         >
         <!-- X, Y, A, B -->
         <Button
@@ -169,6 +169,7 @@
         android:id="@+id/joysticks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:gravity="center"
         >
@@ -176,27 +177,38 @@
         <io.github.controlwear.virtual.joystick.android.JoystickView
             xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/leftJoystick"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/joy_dimen"
+            android:layout_height="@dimen/joy_dimen"
             custom:JV_buttonColor="#FF6E40"
             custom:JV_buttonSizeRatio="15%"
             custom:JV_borderColor="#00796B"
             custom:JV_backgroundColor="#009688"
             custom:JV_borderWidth="4dp"
-            custom:JV_fixedCenter="false"            />
-        <!-- ImageView
-            android:id="@+id/leftJoystick"
+            custom:JV_fixedCenter="false"
+            />
+        <TextView
+            android:id="@+id/leftJoyAngle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/joystick_bar"
-            / -->
+            android:text="@string/angle"
+            android:layout_alignLeft="@id/leftJoystick"
+            android:layout_alignTop="@id/leftJoystick"
+            />
+        <TextView
+            android:id="@+id/leftJoyStrength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/strength"
+            android:layout_alignRight="@id/leftJoystick"
+            android:layout_alignTop="@id/leftJoystick"
+            />
 
         <!-- Right joy stick -->
         <io.github.controlwear.virtual.joystick.android.JoystickView
             xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/rightJoystick"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/joy_dimen"
+            android:layout_height="@dimen/joy_dimen"
             android:layout_toRightOf="@id/leftJoystick"
             android:layout_marginLeft="10dp"
             custom:JV_buttonColor="#FF6E40"
@@ -206,13 +218,22 @@
             custom:JV_borderWidth="4dp"
             custom:JV_fixedCenter="false"
             />
-        <!-- ImageView
-            android:id="@+id/rightJoystick"
+        <TextView
+            android:id="@+id/rightJoyAngle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/joystick_bar"
-            android:layout_toRightOf="@id/leftJoystick"
-            / -->
+            android:text="@string/angle"
+            android:layout_alignLeft="@id/rightJoystick"
+            android:layout_alignTop="@id/rightJoystick"
+            />
+        <TextView
+            android:id="@+id/rightJoyStrength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/strength"
+            android:layout_alignRight="@id/rightJoystick"
+            android:layout_alignTop="@id/rightJoystick"
+            />
 
     </RelativeLayout>
     <!-- ZLeft -->
@@ -259,7 +280,7 @@
         android:id="@+id/xmit_text"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Transmit debug text"
+        android:text="@string/transmit_debug_text"
         app:layout_constraintTop_toBottomOf="@id/layout_minus_home_plus"
         app:layout_constraintStart_toEndOf="@id/layout_pad"
         app:layout_constraintEnd_toStartOf="@id/layout_XYAB"
