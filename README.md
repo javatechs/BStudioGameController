@@ -7,7 +7,8 @@ It implements the [classic controller mapping](https://github.com/javatechs/WiiC
 and is very loosely based on [the Wii controller](https://en.wikipedia.org/wiki/Wii_Classic_Controller). The controller communicates with [Bowler Studio](http://commonwealthrobotics.com/), a robotic development and device management platform. Bowler Studio interprets the controls and directs SmallKat movement.
 
 ## Additional Thanks
-Portions use controlwear's [virtual-joystick-android](https://github.com/controlwear/virtual-joystick-android).
+Portions use controlwear's [virtual-joystick-android](https://github.com/controlwear/virtual-joystick-android)
+and [SimplePacketComsJava](https://github.com/madhephaestus/SimplePacketComsJava).
 
 ## License
 ```
