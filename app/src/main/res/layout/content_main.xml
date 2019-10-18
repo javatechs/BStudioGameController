@@ -255,6 +255,13 @@
         android:max="255"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/zleft_trigger_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/zleft_trigger"
+        app:layout_constraintBottom_toTopOf="@id/zleft_trigger"
+        />
 
     <!-- ZRight -->
     <Button
@@ -276,6 +283,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/zright_trigger_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/zright_trigger"
+        app:layout_constraintBottom_toTopOf="@id/zright_trigger"
+        />
+
+    <!-- Debug text -->
     <TextView
         android:id="@+id/xmit_text"
         android:layout_width="300dp"

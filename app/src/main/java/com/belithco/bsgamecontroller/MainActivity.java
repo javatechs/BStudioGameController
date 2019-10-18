@@ -109,9 +109,11 @@ public class MainActivity extends AppCompatActivity {
         // Z Left/Right Triggers
         SeekBar seekBar;
         seekBar = findViewById(R.id.zleft_trigger);
-        seekBar.setOnSeekBarChangeListener(new ZTriggerListener(GAMECTRLR_COMM_OFFSET_CLASSIC.TriggerLeft));
+        seekBar.setOnSeekBarChangeListener(
+                new ZTriggerListener(GAMECTRLR_COMM_OFFSET_CLASSIC.TriggerLeft, R.id.zleft_trigger_value));
         seekBar = findViewById(R.id.zright_trigger);
-        seekBar.setOnSeekBarChangeListener(new ZTriggerListener(GAMECTRLR_COMM_OFFSET_CLASSIC.TriggerRight));
+        seekBar.setOnSeekBarChangeListener(
+                new ZTriggerListener(GAMECTRLR_COMM_OFFSET_CLASSIC.TriggerRight, R.id.zright_trigger_value));
 
         // Pad: Down/Up, Left/Right
         // TODO might be better as single image with hit test
@@ -282,13 +284,18 @@ public class MainActivity extends AppCompatActivity {
      */
     class ZTriggerListener implements SeekBar.OnSeekBarChangeListener {
         GAMECTRLR_COMM_OFFSET_CLASSIC offset;
-        public ZTriggerListener(GAMECTRLR_COMM_OFFSET_CLASSIC offset){
+        int idZTriggerValue;
+        public ZTriggerListener(GAMECTRLR_COMM_OFFSET_CLASSIC offset, int idZTriggerValue) {
             this.offset = offset;
+            this.idZTriggerValue = idZTriggerValue;
         }
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             MainActivity host = (MainActivity) seekBar.getContext();
+            TextView tv;
+            tv = findViewById(idZTriggerValue);
+            tv.setText(""+i);
             if (null==host.gcs) {
                 return;
             }
