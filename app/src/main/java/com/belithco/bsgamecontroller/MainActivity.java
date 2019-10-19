@@ -337,9 +337,9 @@ public class MainActivity extends AppCompatActivity {
             double radians = Math.toRadians(angle);
             // Display raw joystick position
             tv = findViewById(idJoyAngle);
-            tv.setText("" + angle);
+            tv.setText("" + angle+"°");
             tv = findViewById(idJoyStrength);
-            tv.setText("" + strength);
+            tv.setText("" + strength+"%");
 
             // Is there a valid GameControllerServer?
             if (null==host.gcs) {
