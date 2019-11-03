@@ -26,23 +26,28 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
+// NOTE! This appears to be off by 1 per specification
+// https://github.com/javatechs/WiiChuck#classic-controller-mapping
+// Send side should include the controller index at offset 0. This shifts sent values by 1 byte.
+// On receive side, GameController.getData() returns the 1 byte shifted data values.
 enum GAMECTRLR_COMM_OFFSET_CLASSIC {
-    JoyXLeft(0),
-    JoyYLeft(1),
-    JoyXRight(2),
-    JoyYRight(3),
-    PadRightLeft(6),
-    PadUpDown(7),
-    ButtonX(8),
-    ButtonY(9),
-    ButtonZLeft(10),
-    TriggerLeft(11),
-    ButtonA(12),
-    ButtonB(13),
-    ButtonPlusMinus(14),
-    ButtonHome(15),
-    TriggerRight(17),
-    ButtonZRight(18),
+    ControllerIndex(0),
+    JoyXLeft(1),
+    JoyYLeft(2),
+    JoyXRight(3),
+    JoyYRight(4),
+    PadRightLeft(7),
+    PadUpDown(8),
+    ButtonX(9),
+    ButtonY(10),
+    ButtonZLeft(11),
+    TriggerLeft(12),
+    ButtonA(13),
+    ButtonB(14),
+    ButtonPlusMinus(15),
+    ButtonHome(16),
+    TriggerRight(18),
+    ButtonZRight(19),
     ;
     private int offset;
     GAMECTRLR_COMM_OFFSET_CLASSIC(int offset) {
@@ -175,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initControllerData(){
         int[] array = gcs.getControllerData();
+        array[GAMECTRLR_COMM_OFFSET_CLASSIC.ControllerIndex.offset()] = 2;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXLeft.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYLeft.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXRight.offset()] = 128;
@@ -235,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             // TODO Enable/disable with preferences
-//            outStr = ""+array.length;
+//            outStr = outStr +array.length;
             xmit_text.setText(outStr);
         }
     }
