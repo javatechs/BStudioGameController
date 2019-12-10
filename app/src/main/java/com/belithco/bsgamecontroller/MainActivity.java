@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     public GameControllerServer gcs = null;
     UDPSimplePacketComs coms;
     String defaultControllerName = "GameController_22";
+    int defaultControllerID = 2;
+    int controllerID = defaultControllerID;
     String controllerName = defaultControllerName;
     TextView xmit_text = null;
 
@@ -71,12 +73,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Get controllerName from preferences
         // TODO controller name never stored in preferences
-        controllerName  = AppPreferences.getPrefStr(this,AppPreferences.PREF_MODEL_CURRENT_ROBOT, defaultControllerName);
+        controllerName = AppPreferences.getPrefStr(this,AppPreferences.PREF_MODEL_CONTROLLER_NAME, defaultControllerName);
+        controllerID = AppPreferences.getPrefInt(this,AppPreferences.PREF_MODEL_CONTROLLER_ID, defaultControllerID);
 
         // Title
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(controllerName + " - " + getResources().getString(R.string.app_name));
+        toolbar.setTitle(controllerName + "."+controllerID+" - " + getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
         // Floating action bar (disabled)
@@ -91,8 +94,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setVisibility(View.INVISIBLE);
 
         // Controller Name
-        EditText editText = findViewById(R.id.controller_name);
+        EditText editText;
+        editText = findViewById(R.id.controller_name);
         editText.setText(controllerName);
+        // Controller ID
+        editText = findViewById(R.id.controller_id);
+        editText.setText(""+controllerID);
 
         // X,Y,A,B, Home, ZLeft, ZRight Buttons
         Button btn;
@@ -139,26 +146,26 @@ public class MainActivity extends AppCompatActivity {
 
         // Left/Right Joystick
         JoystickView joystick;
-        joystick = (JoystickView) findViewById(R.id.leftJoystick);
+        joystick = findViewById(R.id.leftJoystick);
         joystick.setOnMoveListener(
                 new JoystickListener(this,
                         GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXLeft, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYLeft,
                         R.id.leftJoyAngle, R.id.leftJoyStrength));
-        joystick = (JoystickView) findViewById(R.id.rightJoystick);
+        joystick = findViewById(R.id.rightJoystick);
         joystick.setOnMoveListener(
                 new JoystickListener(this,
                         GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXRight, GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYRight,
                         R.id.rightJoyAngle, R.id.rightJoyStrength));
 
         // Connect
-        Switch sw = (Switch) findViewById(R.id.switch_onoff);
+        Switch sw = findViewById(R.id.switch_onoff);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // The toggle is enabled
                     try {
                         if (null == gcs) {
-                            gcs = new GameControllerServer(controllerName,2);
+                            gcs = new GameControllerServer(controllerName, controllerID);
                         }
                         initControllerData();
                         gcs.connect();
@@ -180,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initControllerData(){
         int[] array = gcs.getControllerData();
-        array[GAMECTRLR_COMM_OFFSET_CLASSIC.ControllerIndex.offset()] = 2;
+        array[GAMECTRLR_COMM_OFFSET_CLASSIC.ControllerIndex.offset()] = controllerID;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXLeft.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYLeft.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXRight.offset()] = 128;
@@ -207,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void updateDebugText() {
 
-        xmit_text = (TextView) findViewById(R.id.xmit_text);
+        xmit_text = findViewById(R.id.xmit_text);
         Thread t = new Thread() {
 
             @Override

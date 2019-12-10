@@ -36,6 +36,26 @@
         app:layout_constraintBottom_toBottomOf="@id/controller_name_caption"
         app:layout_constraintLeft_toRightOf="@id/controller_name_caption"
         />
+    <TextView
+        android:id="@+id/controller_id_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/controller_id"
+        android:layout_marginTop="@dimen/screen_edge_margin"
+        android:layout_marginLeft="6dp"
+        app:layout_constraintBottom_toBottomOf="@id/switch_onoff"
+        app:layout_constraintLeft_toRightOf="@id/controller_name"
+        />
+    <EditText
+        android:id="@+id/controller_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--"
+        android:layout_marginTop="@dimen/screen_edge_margin"
+        app:layout_constraintBottom_toBottomOf="@id/switch_onoff"
+        app:layout_constraintLeft_toRightOf="@id/controller_id_caption"
+        />
+
     <!-- Pad -->
     <RelativeLayout
         android:id="@+id/layout_pad"
