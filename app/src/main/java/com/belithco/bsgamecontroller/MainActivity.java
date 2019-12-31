@@ -1,6 +1,7 @@
 package com.belithco.bsgamecontroller;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,7 +9,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import edu.wpi.SimplePacketComs.phy.UDPSimplePacketComs;
 import edu.wpi.SimplePacketComs.server.device.GameControllerServer;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -23,8 +23,6 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-
-import java.util.Arrays;
 
 // NOTE! This appears to be off by 1 per specification
 // https://github.com/javatechs/WiiChuck#classic-controller-mapping
@@ -59,8 +57,9 @@ enum GAMECTRLR_COMM_OFFSET_CLASSIC {
 }
 
 public class MainActivity extends AppCompatActivity {
-    public GameControllerServer gcs = null;
-    UDPSimplePacketComs coms;
+    static final String TAG = "MainActivity";
+    static public GameControllerServer gcs = null;
+    static public ScriptControllerServer ccs = null;
     String defaultControllerName = "GameController_22";
     int defaultControllerID = 2;
     int controllerID = defaultControllerID;
@@ -163,18 +162,24 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // The toggle is enabled
-                    try {
-                        if (null == gcs) {
+                    if (null == gcs) {
+                        try {
                             gcs = new GameControllerServer(controllerName, controllerID);
+                            initControllerData();
+                            ccs = new ScriptControllerServer(1985);
+                            ccs.getPacket().oneShotMode();
+                            gcs.addServer(ccs);
+                            gcs.connect();
+                        } catch (Exception e) {
+                            Log.d("onoff (connect) button", "gcs.connect() failed");
                         }
-                        initControllerData();
-                        gcs.connect();
-                    } catch (Exception e) {
-
                     }
                 } else {
                     // The toggle is disabled
-                    gcs.disconnectDeviceImp();
+                    if (null != gcs) {
+                        gcs.disconnectDeviceImp();
+                        gcs = null;
+                    }
                 }
             }
         });
@@ -230,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 } catch (InterruptedException e) {
+                    Log.d("UpdateDebugText Thread", "Interrupted!");
                 }
             }
         };
@@ -385,10 +391,18 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        Intent intent;
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+//                intent = new Intent(this, SettingsActivity.class);
+//                startActivity(intent);
+                return true;
+            case R.id.action_command:
+                intent = new Intent(this, ScriptActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
