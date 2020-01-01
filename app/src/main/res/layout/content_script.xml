@@ -23,10 +23,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/scriptName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Make cat sit"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -34,29 +33,41 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/commandText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:ems="10"
-                android:background="#F0F0F0"
-                android:inputType="textLongMessage|textMultiLine" />
-
-            <Button
-                android:id="@+id/sendButton"
+                android:id="@+id/script"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="@android:color/holo_blue_dark"
-                android:onClick="onRunScript"
-                android:text="Run script" />
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:background="#F0F0F0"
+                android:inputType="textLongMessage|textMultiLine"
+                android:imeOptions="actionDone"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="100"
+                android:layout_margin="4dp"
+                android:background="#C0C0C0"
+                android:orientation="horizontal"
+                >
+                <Button
+                    android:id="@+id/sendButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="100"
+                    android:backgroundTint="@android:color/holo_blue_dark"
+                    android:text="Run script" />
+
+                <ImageButton
+                    android:id="@+id/deleteScript"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    app:srcCompat="@android:drawable/ic_delete" />
+            </LinearLayout>
         </LinearLayout>
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

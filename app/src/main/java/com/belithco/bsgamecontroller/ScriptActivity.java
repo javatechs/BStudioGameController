@@ -15,20 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import static com.belithco.bsgamecontroller.MainActivity.*;
 
 public class ScriptActivity extends AppCompatActivity {
 
-//    String defaultCommand = "https://github.com/javatechs/BowlerDebug,"
-//                            +"src/main/groovy/DialogExample.groovy,"
-//                            +"sit,nod,wag";
-//    String defaultCommand = "https://github.com/javatechs/BowlerDebug,"
-//                            +"src/main/groovy/movement.groovy,"
-//                            +"sit,nod,wag";
-//    String defaultCommand = "file:///home/fdou/Documents/workspace/BowlerDebug/src/main/groovy/DialogExample.groovy,"
-//                            +"sit,nod,wag";
-    String defaultCommand = "file://movement.groovy,sit,nod,wag";
+    ArrayList<ScriptModel> data = null;
+    static int ct = 1;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -39,29 +35,35 @@ public class ScriptActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Add a new script...", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .setDuration(2000).show();
+                // TODO Need better 'add new'. Reposition list to newest entry.
+                if (null!=data) {
+                    data.add(new ScriptModel("New "+ct, ""));
+                    ct++;
+                    ListView list = findViewById(R.id.list);
+                    ((ScriptListAdapter)list.getAdapter()).notifyDataSetChanged();
+                }
             }
         });
-        //
-        EditText editText = findViewById(R.id.commandText);
-        if (null!=editText) {
-            Editable editable = editText.getText();
-            if (editable.length()<1) {
-                editable.clear();
-                editable.append(defaultCommand);
-            }
-        }
-
+        // TODO Should build list from preferences
+        data = new ArrayList<ScriptModel>();
+        data.add(new ScriptModel("Wag, nod, sit and speak.",
+        "file://movement.groovy,Wag,nod,sit,speak"));
+        data.add(new ScriptModel("Dialog example.",
+        "https://github.com/javatechs/BowlerDebug,src/main/groovy/DialogExample.groovy"));
+        ScriptListAdapter listAdapter = new ScriptListAdapter(data, this);
+        ListView list=(ListView)findViewById(R.id.list);
+        list.setAdapter(listAdapter);
     }
 
     public void onRunScript(View view) {
         //
-        EditText editText = findViewById(R.id.commandText);
+        EditText editText = findViewById(R.id.script);
         if (  (null!=editText)
            && (null!= ccs)) {
             Editable editable = editText.getText();
