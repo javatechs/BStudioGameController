@@ -16,6 +16,7 @@ public class AppPreferences {
     //
     public static final String PREF_MODEL_CONTROLLER_NAME = "LOCAL.MODEL.DEVICE.CONTROLLER_NAME";
     public static final String PREF_MODEL_CONTROLLER_ID = "LOCAL.MODEL.DEVICE.CONTROLLER_ID";
+    public static final String PREF_SCRIPTS = "LOCAL.SCRIPTS";
 
     /**
      *

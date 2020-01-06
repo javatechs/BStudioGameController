@@ -1,14 +1,24 @@
 <resources>
     <string name="app_name">BStudio Game Controller</string>
+    <!-- Controller Activity -->
     <string name="action_settings">Settings</string>
-    <string name="action_game_controller">Game Controller</string>
+    <string name="action_script">Run Scripts</string>
     <string name="off_On">Off/On</string>
     <string name="controller_name">Controller Name</string>
     <string name="controller_id">ID</string>
     <string name="angle">Angle</string>
     <string name="strength">Strength</string>
     <string name="transmit_debug_text">Transmit debug text</string>
-    <!-- Scripts -->
-    <string name="action_script">Run Scripts</string>
+    <!-- Scripts Activity -->
     <string name="title_activity_script">Run Scripts</string>
+    <string name="action_game_controller">Game Controller</string>
+    <string name="action_load_script_file">Load script file</string>
+    <string name="action_save_script_file">Save script file</string>
+    <string name="NO_EXT_STORE">External storage not mounted</string>
+    <string name="GRANTED_EXT_STORE_WRITE">You granted write external storage permission. Please attempt to store again.</string>
+    <string name="DENIED_EXT_STORE_WRITE">You denied write external storage permission.</string>
+    <string name="GRANTED_EXT_STORE_READ">You granted read external storage permission. Please attempt to read again.</string>
+    <string name="DENIED_EXT_STORE_READ">You denied read external storage permission.</string>
+    <string name="SAVE_TO_EXT_STORE">Save to public external storage failed. Error message is</string>
+    <string name="READ_FROM_EXT_STORE">Read from public external storage failed. Error message is</string>
 </resources>

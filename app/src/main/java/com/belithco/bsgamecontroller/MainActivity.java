@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                             gcs = new GameControllerServer(controllerName, controllerID);
                             initControllerData();
                             ccs = new ScriptControllerServer(1985);
-                            ccs.getPacket().oneShotMode();
+//                            ccs.getPacket().oneShotMode();
                             gcs.addServer(ccs);
                             gcs.connect();
                         } catch (Exception e) {
