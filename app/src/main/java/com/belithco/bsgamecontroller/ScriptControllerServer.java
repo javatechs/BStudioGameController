@@ -21,7 +21,7 @@ public class ScriptControllerServer extends ByteServer {
         packet[0] = (byte)0xff;
         if (  (null!=cmd)
            && (cmd.length()>0)
-//           && (nextSeqNumber!=lastSeqNumber)
+           && (nextSeqNumber!=lastSeqNumber)
            ) {
             // Init packet buffer
             for (int i = 0; i < packet.length; i++) {

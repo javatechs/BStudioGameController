@@ -29,7 +29,7 @@ public class ScriptActivity extends AppCompatActivity {
     String defaultScript =
         "[{"+
         "\"name\": \"Dialog example.\","+
-        "\"text\": \"https://github.com/javatechs/BowlerDebug,src/main/groovy/DialogExample.groovy\""+
+        "\"text\": \"https://github.com/javatechs/BowlerDebug.git,src/main/groovy/DialogExample.groovy\""+
         "}]";
 
     @SuppressLint("RestrictedApi")
