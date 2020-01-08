@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYLeft.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyXRight.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.JoyYRight.offset()] = 128;
-        array[4] = 0;
         array[5] = 0;
+        array[6] = 0;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.PadRightLeft.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.PadUpDown.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.ButtonX.offset()] = 0;
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.ButtonB.offset()] = 0;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.ButtonPlusMinus.offset()] = 128;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.ButtonHome.offset()] = 0;
-        array[16] = 0;
+        array[17] = 0;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.TriggerRight.offset()] = 0;
         array[GAMECTRLR_COMM_OFFSET_CLASSIC.ButtonZRight.offset()] = 0;
     }
