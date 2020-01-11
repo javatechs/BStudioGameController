@@ -28,20 +28,26 @@ This example loads files from the Internet.
 
 __Example command 2 - Working with local files:__
 
-`file://movement.groovy,speak/Watch me sit!`
+`file://movement.groovy,speak;Watch me sit!`
 
 This example references a local file, movement.groovy. Since the file name doesn't start with '/'
 the software searches for the movement.groovy in the default, home directory `~` of Bowler Studio.
 
 __Example command 3 - Movement and speech:__
 
-`https://github.com/javatechs/BowlerDebug,src/main/groovy/movement.groovy,wag/10/2,nod,no!`
+`https://github.com/javatechs/BowlerDebug,src/main/groovy/movement.groovy,wag;10;2,nod,no!`
 
-In this case, the token that begins with `wag` is followed by `/10/2`.
+In this case, the token that begins with `wag` is followed by `;10;2`.
 
-`https://github.com/javatechs/BowlerDebug,src/main/groovy/movement.groovy,speak/Watch me sit!`
+`https://github.com/javatechs/BowlerDebug,src/main/groovy/movement.groovy,speak;Watch me sit!`
 
 This demonstrates `BowlerKernel.speak()` method.
+
+__Example command 4 - Sound effects:__
+
+`https://github.com/javatechs/BowlerDebug,src/main/groovy/movement.groovy,playaudio;<someURL>`
+
+`playaudio` plays a wav file from the internet or the file system.
 
 __Other UI components:__
 - Load/save Scripts file on options menu.
